@@ -352,7 +352,7 @@ if(ROOTSYS)
                              "${ROOTSYS}/tree/treeplayer/src/*.o"
                              "${ROOTSYS}/io/xmlparser/src/*.o"
                              "${ROOTSYS}/math/minuit2/src/*.o"
-                             "${ROOTSYS}/net/http/src/*.o")
+                             "${ROOTSYS}/net/http/src/TBufferJSON.cxx.o")
         add_library(RootExtra STATIC ${_extraroot})
         set_target_properties(RootExtra PROPERTIES
                                         COMPILE_FLAGS "${LIBXML2_INCLUDE_DIR} ${OPENSSL_INCLUDE_DIR}")
