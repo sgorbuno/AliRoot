@@ -1,4 +1,4 @@
-AliAnalysisTaskPIDqa *AddTaskPIDqa(const char *useroutputfile=""){
+AliAnalysisTask *AddTaskPIDqa(const char *useroutputfile=""){
   //get the current analysis manager
   AliAnalysisManager *mgr = AliAnalysisManager::GetAnalysisManager();
   if (!mgr) {
