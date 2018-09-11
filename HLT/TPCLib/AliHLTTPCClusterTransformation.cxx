@@ -172,8 +172,6 @@ int  AliHLTTPCClusterTransformation::Init( Long_t TimeStamp, bool isMC, Transfor
  
   pCalib->GetTransform()->SetCurrentRecoParam(recParam);
   
-  fOrigTransform = pCalib->GetTransform();
-  fOrigTransform->SetCurrentTimeStamp( static_cast<UInt_t>(TimeStamp) );
 
   // set current time stamp and initialize the fast transformation
   bool useOrigTransform = ( fTransformKind==TransformationKind::Original);
@@ -189,6 +187,9 @@ int  AliHLTTPCClusterTransformation::Init( Long_t TimeStamp, bool isMC, Transfor
     }
   }
   
+  // offline transformation is already initialised in fFastTransform or in fFastTransformManager
+  fOrigTransform = pCalib->GetTransform();
+
   return 0;
 }
 
@@ -243,9 +244,6 @@ Int_t AliHLTTPCClusterTransformation::SetCurrentTimeStamp( Long_t TimeStamp )
   
   pCalib->GetTransform()->SetCurrentRecoParam(recParam);
 
-  fOrigTransform = pCalib->GetTransform();
-  fOrigTransform->SetCurrentTimeStamp( static_cast<UInt_t>(TimeStamp) );
-
   int err = fFastTransform.SetCurrentTimeStamp( TimeStamp );
   if( err!=0 ){
     return Error(-4,Form( "AliHLTTPCClusterTransformation::SetCurrentTimeStamp: SetCurrentTimeStamp to the Fast Transformation failed with error %d :%s",err,fFastTransform.GetLastError()) );
@@ -257,7 +255,10 @@ Int_t AliHLTTPCClusterTransformation::SetCurrentTimeStamp( Long_t TimeStamp )
       return Error(-10,Form( "AliHLTTPCClusterTransformation::SetCurrentTimeStamp: Initialisation of Fast Transformation failed with error %d :%s",err,fFastTransformManager->getLastError()) );    
     }
   }
-  
+
+  // time stamp for the offline transformation is already set in fFastTransform or in fFastTransformManager
+  fOrigTransform = pCalib->GetTransform();
+
  return 0;
 }
 
